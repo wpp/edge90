@@ -7,11 +7,11 @@ An example repository for reproducing a curious bug.
 3. a page requesting the users _internal_ camera (`getUserMedia`)
 4. the resulting camera image is rotated by 90°:
 
-<img src="./rotated.png">
+<img src="./rotated.PNG">
 
 vs expected result:
 
-<img src="./correct.png">
+<img src="./correct.PNG">
 
 Browser affected:
 
