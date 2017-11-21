@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  <video id="video" autoplay></video>
+  <script type="text/javascript">
+    navigator.mediaDevices.enumerateDevices()
+      .then(gotDevices)
+      .then(getUserMedia)
+      .then(gotStream)
+      .catch(console.error);
+
+    function gotDevices(mediaDevices) {
+      console.log('gotDevices: ', mediaDevices);
+      const cameras = mediaDevices.filter(d => d.kind === 'videoinput');
+      const camera  = cameras.find(c => c.label.match(/integrated/i)) || cameras[0];
+      console.log('camera.deviceId: ', camera.deviceId);
+      return camera.deviceId;
+    }
+
+    function getUserMedia(cameraId) {
+      const constraints = {
+        video: { deviceId: { exact: cameraId } },
+        audio: true
+      };
+      console.log('getUserMedia: ', constraints);
+      return navigator.mediaDevices.getUserMedia(constraints);
+    }
+
+    function gotStream(stream) {
+      console.log('gotStream: ', stream);
+      let videoElement = document.getElementById('video');
+      videoElement.srcObject = stream;
+    }
+  </script>
+</body>
+</html>
